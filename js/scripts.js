@@ -92,10 +92,16 @@ function showEmployees(data) {
 //----------------------------------------------
 
 //select.addEventListener('change', fetchData); //this said select was not defined
-gallery.addEventListener('click', ); //this triggered the checkStatus message on console and button did not give what i wanted - when I had fetch Data in there.
+gallery.addEventListener('click', gallery); //this triggered the checkStatus message on console and button did not give what i wanted - when I had fetch Data in there.
 //None of the variables I pass in the second spot seem to be giving anything or allowing me to move forward 
 
+gallery.addEventListener("click", (e) => {
+    if(e.target(".modal-close-btn")) {   //console says e.target is not a function
+        for(let i=0; i <modal.length; i++) {
 
+        }
+    }
+})
 gallery.addEventListener("click", (e) => {
                     if (e.target.className === "gallery"){
                         showModal(); //not sure what to pass in ()
