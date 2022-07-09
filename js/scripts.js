@@ -95,6 +95,7 @@ function showEmployees(data) {
 gallery.addEventListener("click", (e) => {
   if (e.target.className === "card"){
       showModal(); //not sure what to pass in ()
+      console.log("button clicked");
   }
 }); //this button does not work
 //select.addEventListener('change', fetchData); //this said select was not defined
@@ -104,7 +105,7 @@ gallery.addEventListener('click', gallery); //this triggered the checkStatus mes
 gallery.addEventListener("click", (e) => {
     if(e.target(".modal-close-btn")) {   //console says e.target is not a function
         for(let i=0; i <modal.length; i++) {
-
+console.log("button clicked");
         }
     }
 })
@@ -135,10 +136,25 @@ gallery.addEventListener("click", (e) => {
 // loop over each of the employees
 // for each employee generate the .card html
 
-function showModal (data) {
+function generateCard (data) {
     for(let i=0; i<employeeCard.length; i++) {
-    //const chosenEmployee = data.map((employee) => {
-        const modalContainer = 
+    const chosenEmployee = data.map((employee) => {
+      let employeeCard = 
+      `<div class="card">
+      <div class="card-img-container">
+          <img class="card-img" src="https://placehold.it/90x90" alt="profile picture">
+      </div>
+      <div class="card-info-container">
+          <h3 id="name" class="card-name cap">first last</h3>
+          <p class="card-text">email</p>
+          <p class="card-text cap">city, state</p>
+      </div>
+  </div>`;
+    }
+    }
+}
+    function showModal (data) {
+    let modalContainer = 
                 `<div class="modal-container">
                 <div class="modal">
                     <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
@@ -154,8 +170,8 @@ function showModal (data) {
                     </div>
                 </div>`;
 
-        };
-
+        }
+      
 // append that html to the #gallery container
 gallery.body.insertAdjacentHTML('beforeend', modalContainer)
 gallery.innerHTML = ""; //not doing anything?
