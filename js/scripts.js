@@ -12,7 +12,7 @@ const gallery = document.getElementById("gallery"); //I added the html to this o
 const employeeCard = ("");
 const modal = document.getElementsByClassName("modal");
 const body = document.querySelector("body"); //not doing anything
-
+let employeeData = [];
 //console.log(body); //not giving anything
 //console.log(employee); //returning node info once I added "All", prior to that it was returning "null"
 console.log(gallery); //returns commented out info from html but also the individual employee card info that I added to it.(div class card)
@@ -41,7 +41,9 @@ function fetchData(url) {
   return fetch(url) 
     .then(checkStatus) //if fetch promise fulfilled, it will check status of response
     .then((res) => res.json()) //if resolved.then method parses response to json
-    .then((data) => console.log(data.results)) //fetchData func will return promise once data is retrieved and parsed to json. populates an array of empployees and info
+    .then((data) => {
+      employeeData = data.results
+    }) //fetchData func will return promise once data is retrieved and parsed to json. populates an array of empployees and info
     .catch((error) => console.log("Sorry, something went wrong", error)); //This error message is printed to console when I click on an employee card.
 }
 
@@ -66,49 +68,61 @@ function checkStatus(response) {
     }
   }
 // create a function that takes in an array of employees
+//assign an index so each card is assigned a number to loop through
 function showEmployees(data) {
-  let employeeCard = data.map((employee) => {
+  let employeeCard = data.map((employee, index) => {
     //console.log(employee);  //shows all employees & info in console.log, but will only show one employee on console/page when modalContainer() or modal() is called w/in this function. So probably don't call it here.
-    //console.log(employeeCard); //stops images on webpage from showiing...says cannot use before initialization. 
+    //console.log(employeeCard); //stops images on webpage from showing...says cannot use before initialization. 
     //console.log(showEmployees); //shows everything I wrote in this function 
 
-    const html = `<div class="card">
+    const html = `<div class="card" index = "${index}">
     <div class="card-img-container">
       <img class="card-img" src="${employee.picture.medium}" alt="profile picture">  
     </div>
     <div class="card-info-container">
         <h3 id="name" class="card-name cap">${employee.name.first}, ${employee.name.last}</h3>
         <p class="card-text">${employee.email}</p>
-        <p class="card-text cap">${employee.location.city}, ${employee.location.state}</p>
+        <p class="card-text cap">${employee.location.city}</p>
     </div>
 </div>`;
     gallery.insertAdjacentHTML("beforeend", html);
     //console.log(html); //shows all the template literal div info from the html
   });
+  getEmployeeCard(data);
+  return;
 
+}
+
+function getEmployeeCard (data) {
+const cardArray = document.getElementsByClassName("card");
+for (let i= 0; i<cardArray.length; i++) {
+  cardArray[i].addEventListener("click", (e) => {
+    showModal(data);
+  } )
+}
 }
 
 //----------------------------------------------
 //EVENT LISTENERS
 //----------------------------------------------
 
-gallery.addEventListener("click", (e) => {
-  if (e.target.className === "card"){
-      showModal(); //not sure what to pass in ()
-      console.log("button clicked");
-  }
-}); //this button does not work
-//select.addEventListener('change', fetchData); //this said select was not defined
-gallery.addEventListener('click', gallery); //this triggered the checkStatus message on console and button did not give what i wanted - when I had fetch Data in there.
-//None of the variables I pass in the second spot seem to be giving anything or allowing me to move forward 
+// gallery.addEventListener("click", (e) => {
+//   if (e.target.className === "card"){
+//       showModal(); //not sure what to pass in ()
+//       console.log("button clicked");
+//   }
+// }); //this button does not work
+// //select.addEventListener('change', fetchData); //this said select was not defined
+// gallery.addEventListener('click', gallery); //this triggered the checkStatus message on console and button did not give what i wanted - when I had fetch Data in there.
+// //None of the variables I pass in the second spot seem to be giving anything or allowing me to move forward 
 
-gallery.addEventListener("click", (e) => {
-    if(e.target(".modal-close-btn")) {   //console says e.target is not a function
-        for(let i=0; i <modal.length; i++) {
-console.log("button clicked");
-        }
-    }
-})
+// gallery.addEventListener("click", (e) => {
+//     if(e.target(".modal-close-btn")) {   //console says e.target is not a function when I click a card
+//         for(let i=0; i <modal.length; i++) {
+// console.log("button clicked");
+//         }
+//     }
+// })
 // html.addEventListener("click", (e) => {
 //                     if (e.target.className === "card"){
 //                         showModal(); //not sure what to pass in ()
@@ -136,11 +150,13 @@ console.log("button clicked");
 // loop over each of the employees
 // for each employee generate the .card html
 
-function showModal (data) {
-    for(let i=0; i<employeeCard.length; i++) {
-    //const chosenEmployee = data.map((employee) => {
-      let employeeCard
-        const modalContainer = 
+ function showModal (data) {
+//     //for(let i=0; i<employeeCard.length; i++) {
+     const chosenEmployee = data.forEach((employee, index) => {
+          console.log(employee)
+          console.log(index)
+      let modalContainer = "";
+         modalContainer = 
                 `<div class="modal-container">
                 <div class="modal">
                     <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
@@ -151,15 +167,15 @@ function showModal (data) {
                         <p class="modal-text cap">${employee.location.city}</p>
                         <hr>
                         <p class="modal-text">${employee.phone}</p>
-                        <p class="modal-text">${employee.location.street}, ${employee.location.city}, ${employee.location.state} ${employee.location.postcode}</p>
+                        <p class="modal-text">${employee.location.street.name}, ${employee.location.city}, ${employee.location.state} ${employee.location.postcode}</p>
                         <p class="modal-text">Birthday: ${employee.dob}</p>
                     </div>
                 </div>`;
+                document.body.insertAdjacentHTML('beforeend', modalContainer) // append that html to the #gallery container
+        });
+      
+      }
 
-        };
-
-// append that html to the #gallery container
-gallery.body.insertAdjacentHTML('beforeend', modalContainer)
 gallery.innerHTML = ""; //not doing anything?
 
 // Gallery container    < class="search-container">
@@ -179,7 +195,7 @@ const searchContainer =
 //const data = employeeInfo;
 //function employeeArray (data) {
     //select.innerHTML = ;
-    }
+   // }
 
 //const arrayList = data.map(employeeInfo =>(employeeInfo, gallery) )
 // let results = data.results;
