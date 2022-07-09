@@ -85,12 +85,18 @@ function showEmployees(data) {
     gallery.insertAdjacentHTML("beforeend", html);
     //console.log(html); //shows all the template literal div info from the html
   });
+
 }
 
 //----------------------------------------------
 //EVENT LISTENERS
 //----------------------------------------------
 
+gallery.addEventListener("click", (e) => {
+  if (e.target.className === "card"){
+      showModal(); //not sure what to pass in ()
+  }
+}); //this button does not work
 //select.addEventListener('change', fetchData); //this said select was not defined
 gallery.addEventListener('click', gallery); //this triggered the checkStatus message on console and button did not give what i wanted - when I had fetch Data in there.
 //None of the variables I pass in the second spot seem to be giving anything or allowing me to move forward 
@@ -102,11 +108,11 @@ gallery.addEventListener("click", (e) => {
         }
     }
 })
-gallery.addEventListener("click", (e) => {
-                    if (e.target.className === "gallery"){
-                        showModal(); //not sure what to pass in ()
-                    }
-                }); //this button does not work
+// html.addEventListener("click", (e) => {
+//                     if (e.target.className === "card"){
+//                         showModal(); //not sure what to pass in ()
+//                     }
+//                 }); //this button does not work
         
 // document.getElementById('gallery').addEventListener("click", (e) => {
 //     showModal();
