@@ -13,6 +13,9 @@ const employeeCard = ("");
 const modal = document.getElementsByClassName("modal");
 const body = document.querySelector("body"); //not doing anything
 let employeeData = [];
+const birthdayFormat =
+
+
 //console.log(body); //not giving anything
 //console.log(employee); //returning node info once I added "All", prior to that it was returning "null"
 console.log(gallery); //returns commented out info from html but also the individual employee card info that I added to it.(div class card)
@@ -80,13 +83,13 @@ function showEmployees(data) {
       <img class="card-img" src="${employee.picture.medium}" alt="profile picture">  
     </div>
     <div class="card-info-container">
-        <h3 id="name" class="card-name cap">${employee.name.first}, ${employee.name.last}</h3>
+        <h3 id="name" class="card-name cap">${employee.name.first} ${employee.name.last}</h3>
         <p class="card-text">${employee.email}</p>
-        <p class="card-text cap">${employee.location.city}</p>
+        <p class="card-text cap">${employee.location.city}, ${employee.location.state}</p>
     </div>
 </div>`;
     gallery.insertAdjacentHTML("beforeend", html);
-    //console.log(html); //shows all the template literal div info from the html
+    console.log(html); //shows all the template literal div info from the html, including each index position of the card
   });
   getEmployeeCard(data);
   return;
@@ -97,7 +100,8 @@ function getEmployeeCard (data) {
 const cardArray = document.getElementsByClassName("card");
 for (let i= 0; i<cardArray.length; i++) {
   cardArray[i].addEventListener("click", (e) => {
-    showModal(data);
+    //showModal(data) = cardArray[i];
+    showModal(data)
   } )
 }
 }
@@ -116,13 +120,7 @@ for (let i= 0; i<cardArray.length; i++) {
 // gallery.addEventListener('click', gallery); //this triggered the checkStatus message on console and button did not give what i wanted - when I had fetch Data in there.
 // //None of the variables I pass in the second spot seem to be giving anything or allowing me to move forward 
 
-// gallery.addEventListener("click", (e) => {
-//     if(e.target(".modal-close-btn")) {   //console says e.target is not a function when I click a card
-//         for(let i=0; i <modal.length; i++) {
-// console.log("button clicked");
-//         }
-//     }
-// })
+
 // html.addEventListener("click", (e) => {
 //                     if (e.target.className === "card"){
 //                         showModal(); //not sure what to pass in ()
@@ -149,10 +147,10 @@ for (let i= 0; i<cardArray.length; i++) {
 //create a function to choose one employee from array
 // loop over each of the employees
 // for each employee generate the .card html
-
+const date = "MM/DD/YYYY";
  function showModal (data) {
-//     //for(let i=0; i<employeeCard.length; i++) {
-     const chosenEmployee = data.forEach((employee, index) => {
+   //for(let i=0; i<employeeCard.length; i++) {
+     let chosenEmployee = data.forEach((employee, index) => {
           console.log(employee)
           console.log(index)
       let modalContainer = "";
@@ -162,20 +160,35 @@ for (let i= 0; i<cardArray.length; i++) {
                     <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
                     <div class="modal-info-container">
                         <img class="modal-img" src="${employee.picture.medium}" alt="profile picture">
-                        <h3 id="name" class="modal-name cap">${employee.name}</h3>
+                        <h3 id="name" class="modal-name cap">${employee.name.first} ${employee.name.last}</h3>
                         <p class="modal-text">${employee.email}</p>
                         <p class="modal-text cap">${employee.location.city}</p>
                         <hr>
                         <p class="modal-text">${employee.phone}</p>
-                        <p class="modal-text">${employee.location.street.name}, ${employee.location.city}, ${employee.location.state} ${employee.location.postcode}</p>
-                        <p class="modal-text">Birthday: ${employee.dob}</p>
-                    </div>
+                        <p class="modal-text">${employee.location.street.number} ${employee.location.street.name}, ${employee.location.city}, ${employee.location.state} ${employee.location.postcode}</p>
+                        <p class="modal-text">Birthday: ${employee.dob.date} </p>
+                    </div> 
                 </div>`;
+                //how do you format the date to be MM/DD/YYYY???? Tried the url and didn't work.
+                //document.getElementById("birthday").innerHTML = ${MM/DD/YYYY};
                 document.body.insertAdjacentHTML('beforeend', modalContainer) // append that html to the #gallery container
-        });
-      
-      }
+                //<p class="modal-text">Birthday: ${employee.dob.date} </p>
+                //Need to format the DOB  - do I need to change in the DOM/HTML?
+const closeButton = document.getElementById("modal-close-btn.modal-close-btn")
+                //creating an event listener to close the modal  - it's not working yet.
+                closeButton.addEventListener("click", (e) => {   //putting the word 'button', 'closeButton' in front made the person in "first position" appear in modal but if I click another it still only shows the first person!
+                  //if I try to add [i] or index in attempt to match what I clicked it comes up as undefined.
+                  "chosenEmployee" //{   //console says e.target is not a function when I click a card
 
+                      //for(let i=0; i <modal.length; i++) {
+              console.log("button clicked"); //this was (not now) working when I click on an employee card in directory - it says "button clicked on console"
+                     // }
+                  })
+              })
+        };
+      
+     // }
+    // month= get Date(dob.date)
 gallery.innerHTML = ""; //not doing anything?
 
 // Gallery container    < class="search-container">
