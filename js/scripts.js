@@ -6,27 +6,29 @@
 //GLOBAL VARIABLES
 //----------------------------------------------
 
+//created variable for the API link and requested results for 12 U.S. citizens
 const url = "https://randomuser.me/api/?results=12&nat=us";
+//created variable to hold the html info from the class "card"
 const employee = document.querySelectorAll(".card"); 
+//created variable to hold the employee info 
 const gallery = document.getElementById("gallery"); //I added the html to this one below in showEmployees() so it shows gallery info on console
-const employeeCard = ("");
+//created variable with an empty string
+const employeeCard = "";
 const modal = document.getElementsByClassName("modal");
 const body = document.querySelector("body"); //not doing anything
+//created variable and set it to an empty array
 let employeeData = [];
-const birthdayFormat =
+const divCard = document.getElementsByClassName("card")
 
-
-//console.log(body); //not giving anything
+//Typing the following directly to console: 
 //console.log(employee); //returning node info once I added "All", prior to that it was returning "null"
-console.log(gallery); //returns commented out info from html but also the individual employee card info that I added to it.(div class card)
-//console.log(employeeCard); //returns a link to the html
+console.log(gallery); //returns the individual employee card info and their index that I added to it.(div class card)
 //console.log(modal); //returns html collection
+
 
 //----------------------------------------------
 //FETCH FUNCTIONS
 //----------------------------------------------
-
-//WARNING: do not use the 'format document' feature as it adds parentheses where not needed. Actually, this may have been a coding issue
 
 //STEP 4: Get & display 12 random users using Random User Generator API -DONE
 // Use the fetch method to request information from a data source  -DONE
@@ -35,9 +37,7 @@ console.log(gallery); //returns commented out info from html but also the indivi
 
 fetch(url)
   .then((response) => response.json())
-  .then((data) => showEmployees(data.results)); //running the show employee function
-
- //const data = data.json(); //error says cannot access data before initialization
+  .then((data) => showEmployees(data.results)); //running the show employee function - this shows them on the webpage
 
 //Function to return fetch method
 function fetchData(url) {   
@@ -46,8 +46,8 @@ function fetchData(url) {
     .then((res) => res.json()) //if resolved.then method parses response to json
     .then((data) => {
       employeeData = data.results
-    }) //fetchData func will return promise once data is retrieved and parsed to json. populates an array of empployees and info
-    .catch((error) => console.log("Sorry, something went wrong", error)); //This error message is printed to console when I click on an employee card.
+    }) //fetchData func will return promise once data is retrieved and parsed to json. populates an array of employees and info
+    .catch((error) => console.log("Sorry, something went wrong", error)); //This error message was printed at point to console when I clicked on an employee card, but not currently.
 }
 
 fetchData(url) //when I type this into console it shows promise is "pending", the promiseState is "fulfilled" and promise Result is 'undefined'
@@ -74,10 +74,6 @@ function checkStatus(response) {
 //assign an index so each card is assigned a number to loop through
 function showEmployees(data) {
   let employeeCard = data.map((employee, index) => {
-    //console.log(employee);  //shows all employees & info in console.log, but will only show one employee on console/page when modalContainer() or modal() is called w/in this function. So probably don't call it here.
-    //console.log(employeeCard); //stops images on webpage from showing...says cannot use before initialization. 
-    //console.log(showEmployees); //shows everything I wrote in this function 
-
     const html = `<div class="card" index = "${index}">
     <div class="card-img-container">
       <img class="card-img" src="${employee.picture.medium}" alt="profile picture">  
@@ -88,20 +84,19 @@ function showEmployees(data) {
         <p class="card-text cap">${employee.location.city}, ${employee.location.state}</p>
     </div>
 </div>`;
-    gallery.insertAdjacentHTML("beforeend", html);
-    console.log(html); //shows all the template literal div info from the html, including each index position of the card
+    gallery.insertAdjacentHTML("beforeend", html); 
   });
-  getEmployeeCard(data);
-  return;
-
+  getEmployeeCard(data); //calling this makes the modal window pop up with the first positioned employee
+  //return;
 }
 
+//maybe look at what I'm passing here and try to specify the clicked employee rather than all.
 function getEmployeeCard (data) {
 const cardArray = document.getElementsByClassName("card");
 for (let i= 0; i<cardArray.length; i++) {
   cardArray[i].addEventListener("click", (e) => {
-    //showModal(data) = cardArray[i];
-    showModal(data)
+    showModal(data) = cardArray[i]; //getting an error here
+    //showModal(data)
   } )
 }
 }
@@ -111,25 +106,26 @@ for (let i= 0; i<cardArray.length; i++) {
 //----------------------------------------------
 
 // gallery.addEventListener("click", (e) => {
-//   if (e.target.className === "card"){
-//       showModal(); //not sure what to pass in ()
+//   if (e.target.className !== "gallery"){
+//       gallery(e.target.index); 
 //       console.log("button clicked");
 //   }
-// }); //this button does not work
-// //select.addEventListener('change', fetchData); //this said select was not defined
-// gallery.addEventListener('click', gallery); //this triggered the checkStatus message on console and button did not give what i wanted - when I had fetch Data in there.
+// }); //this button does not work...can't seem to get the right names added
+
+//gallery.addEventListener('change', index); 
+//gallery.addEventListener('click', gallery); //this triggered the checkStatus message at one point on console and button did not give what i wanted - when I had fetch Data in there.
 // //None of the variables I pass in the second spot seem to be giving anything or allowing me to move forward 
 
 
 // html.addEventListener("click", (e) => {
 //                     if (e.target.className === "card"){
-//                         showModal(); //not sure what to pass in ()
+//                         showModal(employeeData); //not sure what to pass in ()
 //                     }
 //                 }); //this button does not work
         
 // document.getElementById('gallery').addEventListener("click", (e) => {
 //     showModal();
-// });    //console says modalContainer is not defined when placed here after clicking a card.
+// });    //doesn't work
 
 // NOTE: When adding or concatenating to the DOM, avoid doing this: element.innerHTML += 'HTML string'. That technique rewrites the entire DOM. This is problematic because any rewritten elements won't retain any event listeners that were attached to the DOM before the rewrite occurs. Use this method instead: element.insertAdjacentHTML('beforeend', 'HTML string'). That technique will allow you to add strings of HTML to the DOM without disrupting what already exists in the DOM.
 
@@ -147,12 +143,10 @@ for (let i= 0; i<cardArray.length; i++) {
 //create a function to choose one employee from array
 // loop over each of the employees
 // for each employee generate the .card html
-const date = "MM/DD/YYYY";
- function showModal (data) {
-   //for(let i=0; i<employeeCard.length; i++) {
-     let chosenEmployee = data.forEach((employee, index) => {
-          console.log(employee)
-          console.log(index)
+
+ function showModal(data) {
+     let divCard = data.forEach((employee, index) => {
+      //console gives an error on array.forEach     
       let modalContainer = "";
          modalContainer = 
                 `<div class="modal-container">
@@ -169,15 +163,20 @@ const date = "MM/DD/YYYY";
                         <p class="modal-text">Birthday: ${employee.dob.date} </p>
                     </div> 
                 </div>`;
-                //how do you format the date to be MM/DD/YYYY???? Tried the url and didn't work.
-                //document.getElementById("birthday").innerHTML = ${MM/DD/YYYY};
-                document.body.insertAdjacentHTML('beforeend', modalContainer) // append that html to the #gallery container
-                //<p class="modal-text">Birthday: ${employee.dob.date} </p>
-                //Need to format the DOB  - do I need to change in the DOM/HTML?
-const closeButton = document.getElementById("modal-close-btn.modal-close-btn")
+
+                  //read article to fix format for DOB
+                // append that html above to the #gallery container
+                document.body.insertAdjacentHTML('beforeend', modalContainer) //If I comment this line out - the modal window will not open
+              //if I change "body" to gallery it stops popping up the window.
+              const closeButton = document.getElementById("modal-close-btn.modal-close-btn")
                 //creating an event listener to close the modal  - it's not working yet.
-                closeButton.addEventListener("click", (e) => {   //putting the word 'button', 'closeButton' in front made the person in "first position" appear in modal but if I click another it still only shows the first person!
+                
+                closeButton[index].addEventListener("click", (e) => {   
+                  //putting the word 'button', 'closeButton' in front made the person in "first position" appear in modal but if I click another it still only shows the first person!
                   //if I try to add [i] or index in attempt to match what I clicked it comes up as undefined.
+                  //says cannot ready prop of null (reading '0') in the closeButton[index]
+                  
+                  
                   "chosenEmployee" //{   //console says e.target is not a function when I click a card
 
                       //for(let i=0; i <modal.length; i++) {
@@ -186,10 +185,9 @@ const closeButton = document.getElementById("modal-close-btn.modal-close-btn")
                   })
               })
         };
-      
      // }
-    // month= get Date(dob.date)
-gallery.innerHTML = ""; //not doing anything?
+  
+//gallery.innerHTML = ""; //not doing anything
 
 // Gallery container    < class="search-container">
 // use the markup on html as a template for your search feature and append it to this `search-container` div.
@@ -201,30 +199,17 @@ const searchContainer =
     <input type="search" id="search-input" class="search-input" placeholder="Search...">
     <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
 </form>`
+//is this for the "search box/window"?
 
 
-//const html = data.results; //this doesn't work (data is not defined)
-//const arrayList = [];
-//const data = employeeInfo;
-//function employeeArray (data) {
-    //select.innerHTML = ;
-   // }
 
-//const arrayList = data.map(employeeInfo =>(employeeInfo, gallery) )
-// let results = data.results;
-// data.forEach(function (lists) {
-//     html ;
-// })
 
-//})
-//modalContainer(); //not defined if calling it here
-    //modal(); //employee not defined in div when I call this here
-// ---------------------
 
-//console.log(html); //Seems to show a placeholder of an employee card info in console.
-//console.log(employeeDirectory);
-//console.log(gallery); //shows gallery html info in console.
 
-//gallery.insertAdjacentHTML("beforeend", html);
 
-//}
+
+
+
+
+
+
