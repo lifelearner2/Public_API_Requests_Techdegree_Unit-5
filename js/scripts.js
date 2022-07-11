@@ -8,8 +8,6 @@
 
 //created variable for the API link and requested results for 12 U.S. citizens
 const url = "https://randomuser.me/api/?results=12&nat=us";
-//created variable to hold the html info from the class "card"
-const employee = document.getElementsByClassName("card");
 //created variable to hold the employee info
 const gallery = document.getElementById("gallery"); //I added the html to this one below in showEmployees() so it shows gallery info on console
 //created variable with an empty string
@@ -20,7 +18,7 @@ const body = document.querySelector("body"); //not doing anything
 let employeeData = [];
 
 //Typing the following directly to console:
-console.log(employee);
+
 console.log(gallery); //returns the individual employee card info and their index that I added to it.(div class card)
 //console.log(modal); //returns html collection
 
@@ -80,7 +78,8 @@ function showEmployees(data) {
     gallery.insertAdjacentHTML("beforeend", html);
   });
   //showModal(data); //This only shows a random employee on the modal window (without clicking on anything)
-  getEmployeeCard(data); //calling this makes the modal window pop up with the first positioned employee
+  const cardArray = document.getElementsByClassName("card");
+  getEmployeeCard(cardArray, data); //calling this makes the modal window pop up with the first positioned employee
 }
 
 //getEmployeeCard function below:
@@ -115,27 +114,14 @@ function showEmployees(data) {
   //click on 3rd employee card(which would be index 2) it logs 2 to the console.
   //then you can update your console log statement to say console.log(employees[2]) and log out full dataset for the employee at the that index.
   //const cardArray = document.getElementsByClassName("card");
-  function getEmployeeCard(employee, index) {
-  console.log(employee); //this shows an array of the 12 employees with their info
-  for (let i = 0; i < employee[i].length; i++) {
-    employee.addEventListener("click", (e) => {
-      if (employee.clicked === true ) {
-        // let employee = e.target.closest(".card");
-        // const i = card.getAttribute("data-index");
-        console.log("testing button click") //doesn't work
-        //Number.isInteger(i);
-        //Number.isInteger[i];
-        Number.isInteger(data-index);
-        employee[i]
-        showModal(employee.dataset[i]); //this used to show the modal window popup when data was passsed
-        //console.log(employeeData);
-        //employee.dataset[i];
-        // employee.dataset.index;
-        // employeeCard.dataset.index;
-        // employeeCard.dataset[i];
-      }
-      //console.log(employeeCard.dataset[i]);
-    });
+  function getEmployeeCard(cardArray, data) {
+  console.log(data); //this shows an array of the 12 employees with their info
+  for (let i = 0; i < cardArray.length; i++) {
+    cardArray[i].addEventListener("click", (e) => {
+      console.log("testing button click") //doesn't work
+        showModal(data[i]); //this used to show the modal window popup when data was passsed
+      })
+   
   }
 }
 
@@ -160,15 +146,20 @@ function showEmployees(data) {
 // loop over each of the employees
 // for each employee generate the .card html
 
+
+//function - showModal section
 //okay to comment this section out while working on other sections
-function showModal(employee) {
+
   //problem is passing all data instead of just one
 
   //data received should be 1 employee object not all in parentheses for function
   //use the object to populate the modalContainer html
   //not going to use forEach
   //append to modalContainer which I already did in insertAdjacentHTML below
-  employee = data.forEach((employee) => {
+  function showModal(employee) {
+    const test = new Date(employee.dob.date)
+    const birthday = new Intl.DateTimeFormat('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' }).format(test)
+  
     let modalContainer = "";
     modalContainer = `<div class="modal-container">
                 <div class="modal">
@@ -181,10 +172,10 @@ function showModal(employee) {
                         <hr>
                         <p class="modal-text">${employee.phone}</p>
                         <p class="modal-text">${employee.location.street.number} ${employee.location.street.name}, ${employee.location.city}, ${employee.location.state} ${employee.location.postcode}</p>
-                        <p class="modal-text">Birthday: ${employee.dob.date} </p>
+                        <p class="modal-text">Birthday: ${birthday} </p>
                     </div> 
                 </div>`;
-                new Date(monthIndex, day, year);
+               
 
     //read article to fix format for DOB
     //new Date(year, monthIndex, day)
@@ -197,7 +188,8 @@ function showModal(employee) {
     closeButton.addEventListener("click", (e) => {
   
       //remove or hide the modalContainer
-      modalContainer.remove();
+      const modal = document.querySelector(".modal-container");
+      modal.remove();
       //putting the word 'button', 'closeButton' in front made the person in "first position" appear in modal but if I click another it still only shows the first person!
       //if I try to add [i] or index in attempt to match what I clicked it comes up as undefined.
       //says cannot ready prop of null (reading '0') in the closeButton[index]
@@ -208,7 +200,7 @@ function showModal(employee) {
       console.log("button clicked"); //this was (not now) working when I click on an employee card in directory - it says "button clicked on console"
       // }
     });
-  });
+  
 }
 // }
 
