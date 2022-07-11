@@ -86,16 +86,17 @@ function showEmployees(data) {
 </div>`;
     gallery.insertAdjacentHTML("beforeend", html); 
   });
+  //showModal(data); //This only shows a random employee on the modal window (without clicking on anything)
   getEmployeeCard(data); //calling this makes the modal window pop up with the first positioned employee
   //return;
 }
 
 //maybe look at what I'm passing here and try to specify the clicked employee rather than all.
-function getEmployeeCard (data) {
+function getEmployeeCard (data, index) {
 const cardArray = document.getElementsByClassName("card");
 for (let i= 0; i<cardArray.length; i++) {
   cardArray[i].addEventListener("click", (e) => {
-    showModal(data) = cardArray[i]; //getting an error here
+    showModal(data) = cardArray[i]; //this shows the modal window popup
     //showModal(data)
   } )
 }
@@ -146,7 +147,8 @@ for (let i= 0; i<cardArray.length; i++) {
 
  function showModal(data) {
      let divCard = data.forEach((employee, index) => {
-      //console gives an error on array.forEach     
+      //console gives an error on array.forEach   
+        
       let modalContainer = "";
          modalContainer = 
                 `<div class="modal-container">
@@ -164,6 +166,8 @@ for (let i= 0; i<cardArray.length; i++) {
                     </div> 
                 </div>`;
 
+                //event listener
+
                   //read article to fix format for DOB
                 // append that html above to the #gallery container
                 document.body.insertAdjacentHTML('beforeend', modalContainer) //If I comment this line out - the modal window will not open
@@ -172,6 +176,7 @@ for (let i= 0; i<cardArray.length; i++) {
                 //creating an event listener to close the modal  - it's not working yet.
                 
                 closeButton[index].addEventListener("click", (e) => {   
+
                   //putting the word 'button', 'closeButton' in front made the person in "first position" appear in modal but if I click another it still only shows the first person!
                   //if I try to add [i] or index in attempt to match what I clicked it comes up as undefined.
                   //says cannot ready prop of null (reading '0') in the closeButton[index]
