@@ -184,8 +184,10 @@ function showModal(employee) {
                         <p class="modal-text">Birthday: ${employee.dob.date} </p>
                     </div> 
                 </div>`;
+                new Date(monthIndex, day, year);
 
     //read article to fix format for DOB
+    //new Date(year, monthIndex, day)
     // append that html above to the #gallery container
     document.body.insertAdjacentHTML("beforeend", modalContainer); //If I comment this line out - the modal window will not open
     //if I change "body" to gallery it stops popping up the window.
