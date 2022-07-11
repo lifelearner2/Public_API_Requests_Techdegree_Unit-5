@@ -83,10 +83,11 @@ function showEmployees(data) {
   getEmployeeCard(data); //calling this makes the modal window pop up with the first positioned employee
 }
 
+//getEmployeeCard function below:
 //maybe look at what I'm passing here and try to specify the clicked employee rather than all.
 //don't attach event listener to every card, attach it to the overall gallery
 //then "if it's a card, load modal"
-function getEmployeeCard(employee, index) {
+
   //listen for a click for the gallery - DONE
   //check to see if event target was an element by class name 'card' DONE "employee is html element with class of card"
   //if so, grab data-index value property (google data attribute html, click on first one, js access, 'article.dataset.columns' is how to grab index property value)DONE
@@ -94,10 +95,10 @@ function getEmployeeCard(employee, index) {
   //   article should be the variable that holds the html element
   // dataset is what tells it to look at the data attributes
   // columns is the data set that you want to grab, in this case it's index
-  // So I don't know exactly what your variable is that holds the card, so for this example I will just use card
+  //your variable is that holds the card, so for this example I will just use card
   // TO get the value of index-data from the HTML you will need to use card.dataset.index NOT SURE IT'S WORKING
 
-  //make sure value is an integer so we can use as an index for the employeeData
+  //make sure value is an integer so we can use as an index for the employeeData HOW??? WHAT I'M DOING ISN'T
   //use that index value to grab the correct employee from employeeData
   //pass selected employeeData (should be just one employee) to showModal function
 
@@ -114,13 +115,21 @@ function getEmployeeCard(employee, index) {
   //click on 3rd employee card(which would be index 2) it logs 2 to the console.
   //then you can update your console log statement to say console.log(employees[2]) and log out full dataset for the employee at the that index.
   //const cardArray = document.getElementsByClassName("card");
-  console.log(employee);
+  function getEmployeeCard(employee, index) {
+  console.log(employee); //this shows an array of the 12 employees with their info
   for (let i = 0; i < employee[i].length; i++) {
     employee.addEventListener("click", (e) => {
-      if (e.target.employee) {
-        showModal(employee, index); //this shows the modal window popup
+      if (employee.clicked === true ) {
+        // let employee = e.target.closest(".card");
+        // const i = card.getAttribute("data-index");
+        console.log("testing button click") //doesn't work
+        //Number.isInteger(i);
+        //Number.isInteger[i];
+        Number.isInteger(data-index);
+        employee[i]
+        showModal(employee.dataset[i]); //this used to show the modal window popup when data was passsed
         //console.log(employeeData);
-         employee.dataset[i];
+        //employee.dataset[i];
         // employee.dataset.index;
         // employeeCard.dataset.index;
         // employeeCard.dataset[i];
@@ -152,14 +161,14 @@ function getEmployeeCard(employee, index) {
 // for each employee generate the .card html
 
 //okay to comment this section out while working on other sections
-function showModal(employee, index) {
+function showModal(employee) {
   //problem is passing all data instead of just one
 
   //data received should be 1 employee object not all in parentheses for function
   //use the object to populate the modalContainer html
   //not going to use forEach
   //append to modalContainer which I already did in insertAdjacentHTML below
-  employee = data.forEach((employee, index) => {
+  employee = data.forEach((employee) => {
     let modalContainer = "";
     modalContainer = `<div class="modal-container">
                 <div class="modal">
@@ -176,8 +185,6 @@ function showModal(employee, index) {
                     </div> 
                 </div>`;
 
-    //event listener
-
     //read article to fix format for DOB
     // append that html above to the #gallery container
     document.body.insertAdjacentHTML("beforeend", modalContainer); //If I comment this line out - the modal window will not open
@@ -186,8 +193,9 @@ function showModal(employee, index) {
     //creating an event listener to close the modal  - it's not working yet.
     console.log(closeButton);
     closeButton.addEventListener("click", (e) => {
+  
       //remove or hide the modalContainer
-      modalContainer.remove;
+      modalContainer.remove();
       //putting the word 'button', 'closeButton' in front made the person in "first position" appear in modal but if I click another it still only shows the first person!
       //if I try to add [i] or index in attempt to match what I clicked it comes up as undefined.
       //says cannot ready prop of null (reading '0') in the closeButton[index]
@@ -202,7 +210,7 @@ function showModal(employee, index) {
 }
 // }
 
-//gallery.innerHTML = ""; //not doing anything
+gallery.innerHTML = ""; //not doing anything
 
 // Gallery container    < class="search-container">
 // use the markup on html as a template for your search feature and append it to this `search-container` div.
