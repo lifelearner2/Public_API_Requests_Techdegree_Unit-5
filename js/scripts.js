@@ -110,7 +110,8 @@ function showModal(employee) {
                         <p class="modal-text">Birthday: ${birthday} </p>
                     </div> 
                 </div>`;
-  //Extra Credit: HTML to add for modalButtonContainer    - however, this takes away employee card, I created my own above in html - but button doesn't work.
+  //Extra Credit: HTML to add for modalButtonContainer
+  //The provided Html below takes away employee card from view, so I created my own above in html - but button isn't active.
   // <div class="modal-btn-container">
   {
     /* <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
@@ -120,7 +121,7 @@ function showModal(employee) {
   }
 
   //Extra credit: created event listener for the toggle 'View Next Employee' button - purpose: to view next employee while still in modal window
-  //You can view the button while in modal window but button is not working.
+  //You can view the button while in modal window but button is not active.
   // button.addEventListener("click", (e) => {
   //   const button = document.querySelectorAll("button");
   // });
@@ -140,14 +141,14 @@ function showModal(employee) {
 }
 //Extra Credit: changed color of background from white to tan.
 document.body.style.backgroundColor = "tan";
-gallery.innerHTML = ""; //not doing anything
+//gallery.innerHTML = ""; 
 
-//Extra Credit: placing html in variable and adding it to the html to display a search bar at bottom of screen
+//Extra Credit: placing html in variable and adding it to the html to display a search bar at top of screen
 const searchContainer = `<form action="#" method="get">
     <input type="search" id="search-input" class="search-input" placeholder="Search...">
     <input type="submit" value="&#x1F50D;" id="search-submit" class="search-submit">
 </form>`;
-document.body.insertAdjacentHTML("beforeend", searchContainer);
+document.body.insertAdjacentHTML("afterbegin", searchContainer);
 // searchContainer.addEventListener("change", (e) => {
 // //display items that match 
-// })
+// }) //search bar is displayed but not active
