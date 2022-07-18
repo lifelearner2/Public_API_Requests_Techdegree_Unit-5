@@ -93,11 +93,10 @@ function showModal(employee) {
   }).format(test);
 
   let modalContainer = "";
-  //I added a 'View Next Employee' button to toggle between the gallery and the modal (extra credit)
+  //I added a button to toggle between the gallery and the modal (extra credit)
   modalContainer = `<div class="modal-container">
                 <div class="modal">
                     <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
-                    <button type="button" data-toggle="modal" data-target="myModal">View Next Employee</button>
                    
                     <div class="modal-info-container">
                         <img class="modal-img" src="${employee.picture.medium}" alt="profile picture">
@@ -109,23 +108,20 @@ function showModal(employee) {
                         <p class="modal-text">${employee.location.street.number} ${employee.location.street.name}, ${employee.location.city}, ${employee.location.state} ${employee.location.postcode}</p>
                         <p class="modal-text">Birthday: ${birthday} </p>
                     </div> 
+                  <div class="modal-btn-container">
+                    <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
+                    <button type="button" id="modal-next" class="modal-next btn">Next</button>
+                </div>
                 </div>`;
-  //Extra Credit: HTML to add for modalButtonContainer
-  //The provided Html below takes away employee card from view, so I created my own above in html - but button isn't active.
-  // <div class="modal-btn-container">
-  {
-    /* <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
-<button type="button" id="modal-next" class="modal-next btn">Next</button>
-</div>
-</div> */
-  }
-
-  //Extra credit: created event listener for the toggle 'View Next Employee' button - purpose: to view next employee while still in modal window
-  //You can view the button while in modal window but button is not active.
-  // button.addEventListener("click", (e) => {
-  //   const button = document.querySelectorAll("button");
-  // });
-  //console.log(toggleButton);
+  
+//Extra credit: created event listener for prev/next buttons - purpose: to view prev/next employee while still in modal window
+//prev/next buttons are not active yet
+ //const prevButton = document.getElementById("modal-prev");
+//console.log(prevButton);
+//  document.getElementById("modal-prev").addEventListener("click", (e) => {
+//    showModal(data[i]);
+//   });
+ 
 
   // append the html above
   document.body.insertAdjacentHTML("beforeend", modalContainer);
